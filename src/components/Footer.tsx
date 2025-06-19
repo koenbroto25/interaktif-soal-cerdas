@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="bg-gradient-to-r from-primary to-secondary p-2 rounded-xl">
+              <div className="bg-primary p-2 rounded-xl">
                 <GraduationCap className="h-6 w-6 text-white" />
               </div>
               <span className="text-2xl font-bold">EduWorksheet</span>

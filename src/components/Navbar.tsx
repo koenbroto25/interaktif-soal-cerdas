@@ -20,15 +20,15 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white/90 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="bg-gradient-to-r from-primary to-secondary p-2 rounded-xl group-hover:scale-105 transition-transform duration-200">
+            <div className="bg-primary p-2 rounded-xl group-hover:scale-105 transition-transform duration-200">
               <GraduationCap className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <span className="text-2xl font-bold text-primary">
               EduWorksheet
             </span>
           </Link>
@@ -66,7 +66,7 @@ const Navbar = () => {
               </Button>
             </Link>
             <Link to="/register">
-              <Button className="bg-gradient-to-r from-primary to-secondary hover:from-primary-600 hover:to-secondary-600 text-white">
+              <Button className="bg-primary hover:bg-primary-600 text-white">
                 <User className="h-4 w-4 mr-2" />
                 Daftar
               </Button>
@@ -116,7 +116,7 @@ const Navbar = () => {
                   </Button>
                 </Link>
                 <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary-600 hover:to-secondary-600 text-white">
+                  <Button className="w-full bg-primary hover:bg-primary-600 text-white">
                     <User className="h-4 w-4 mr-2" />
                     Daftar
                   </Button>

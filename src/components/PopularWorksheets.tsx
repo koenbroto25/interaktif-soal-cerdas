@@ -49,7 +49,7 @@ const PopularWorksheets = () => {
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Mudah': return 'bg-success text-white';
+      case 'Mudah': return 'bg-secondary text-white';
       case 'Menengah': return 'bg-warning text-white';
       case 'Sulit': return 'bg-destructive text-white';
       default: return 'bg-gray-500 text-white';
@@ -63,7 +63,7 @@ const PopularWorksheets = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
             Jelajahi{' '}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <span className="text-primary">
               Worksheet Populer
             </span>
           </h2>
@@ -120,7 +120,7 @@ const PopularWorksheets = () => {
                   </div>
                 </div>
 
-                <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary-600 hover:to-secondary-600 text-white">
+                <Button className="w-full bg-primary hover:bg-primary-600 text-white">
                   <BookOpen className="h-4 w-4 mr-2" />
                   Mulai Worksheet
                 </Button>
