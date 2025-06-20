@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Checkbox } from '@/components/ui/checkbox';
 import { GraduationCap, Eye, EyeOff, Mail, Lock, User, UserCheck, Users } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -15,13 +16,22 @@ const Register = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    userType: 'student' // 'student' or 'teacher'
+    userType: 'student' as 'student' | 'teacher' | 'admin'
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { signUp, user } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -50,15 +60,31 @@ const Register = () => {
 
     setIsLoading(true);
 
-    // Simulasi proses registrasi
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const { error } = await signUp(formData.email, formData.password, formData.name, formData.userType);
+
+      if (error) {
+        toast({
+          title: "Error Registrasi",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Registrasi Berhasil!",
+          description: "Akun Anda telah berhasil dibuat. Silakan periksa email untuk konfirmasi.",
+        });
+        navigate('/login');
+      }
+    } catch (error) {
       toast({
-        title: "Registrasi Berhasil!",
-        description: "Akun Anda telah berhasil dibuat. Silakan login untuk melanjutkan.",
+        title: "Error",
+        description: "Terjadi kesalahan saat registrasi.",
+        variant: "destructive",
       });
-      // Di sini akan ada redirect ke halaman login
-    }, 2000);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -86,30 +112,42 @@ const Register = () => {
               {/* User Type Selection */}
               <div className="space-y-3">
                 <Label>Saya adalah</Label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-2">
                   <button
                     type="button"
                     onClick={() => handleInputChange('userType', 'student')}
-                    className={`flex items-center justify-center space-x-2 p-3 rounded-lg border-2 transition-colors ${
+                    className={`flex flex-col items-center justify-center space-y-1 p-3 rounded-lg border-2 transition-colors ${
                       formData.userType === 'student'
                         ? 'border-primary bg-primary-50 text-primary'
                         : 'border-gray-200 hover:bg-gray-50'
                     }`}
                   >
-                    <Users className="h-5 w-5" />
-                    <span>Siswa</span>
+                    <Users className="h-4 w-4" />
+                    <span className="text-xs">Siswa</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleInputChange('userType', 'teacher')}
-                    className={`flex items-center justify-center space-x-2 p-3 rounded-lg border-2 transition-colors ${
+                    className={`flex flex-col items-center justify-center space-y-1 p-3 rounded-lg border-2 transition-colors ${
                       formData.userType === 'teacher'
                         ? 'border-primary bg-primary-50 text-primary'
                         : 'border-gray-200 hover:bg-gray-50'
                     }`}
                   >
-                    <UserCheck className="h-5 w-5" />
-                    <span>Guru</span>
+                    <UserCheck className="h-4 w-4" />
+                    <span className="text-xs">Guru</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleInputChange('userType', 'admin')}
+                    className={`flex flex-col items-center justify-center space-y-1 p-3 rounded-lg border-2 transition-colors ${
+                      formData.userType === 'admin'
+                        ? 'border-primary bg-primary-50 text-primary'
+                        : 'border-gray-200 hover:bg-gray-50'
+                    }`}
+                  >
+                    <User className="h-4 w-4" />
+                    <span className="text-xs">Admin</span>
                   </button>
                 </div>
               </div>

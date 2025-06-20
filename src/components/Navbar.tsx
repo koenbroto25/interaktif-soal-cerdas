@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { 
   Home, 
@@ -11,14 +10,33 @@ import {
   X,
   GraduationCap,
   Users,
-  UserCheck
+  UserCheck,
+  LogOut,
+  Settings
 } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, profile, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
+
+  const getRoleLabel = (role: string) => {
+    switch (role) {
+      case 'admin': return 'Admin';
+      case 'teacher': return 'Guru';
+      case 'student': return 'Siswa';
+      default: return role;
+    }
   };
 
   return (
@@ -73,20 +91,49 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Auth Buttons */}
+          {/* Desktop Auth Section */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link to="/login">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
-                <LogIn className="h-4 w-4 mr-2" />
-                Masuk
-              </Button>
-            </Link>
-            <Link to="/register">
-              <Button className="bg-primary hover:bg-primary-600 text-white">
-                <User className="h-4 w-4 mr-2" />
-                Daftar
-              </Button>
-            </Link>
+            {user && profile ? (
+              <div className="flex items-center space-x-4">
+                <div className="text-right">
+                  <p className="text-sm font-medium text-gray-900">
+                    {profile.full_name || profile.email}
+                  </p>
+                  <p className="text-xs text-gray-600">
+                    {getRoleLabel(profile.role)}
+                  </p>
+                </div>
+                <Link to="/dashboard">
+                  <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  onClick={handleSignOut}
+                  className="border-red-300 text-red-600 hover:bg-red-600 hover:text-white"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Keluar
+                </Button>
+              </div>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Masuk
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button className="bg-primary hover:bg-primary-600 text-white">
+                    <User className="h-4 w-4 mr-2" />
+                    Daftar
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -141,18 +188,50 @@ const Navbar = () => {
                 Tentang
               </Link>
               <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-white">
-                    <LogIn className="h-4 w-4 mr-2" />
-                    Masuk
-                  </Button>
-                </Link>
-                <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button className="w-full bg-primary hover:bg-primary-600 text-white">
-                    <User className="h-4 w-4 mr-2" />
-                    Daftar
-                  </Button>
-                </Link>
+                {user && profile ? (
+                  <>
+                    <div className="px-3 py-2 text-sm">
+                      <p className="font-medium text-gray-900">
+                        {profile.full_name || profile.email}
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        {getRoleLabel(profile.role)}
+                      </p>
+                    </div>
+                    <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-white">
+                        <Settings className="h-4 w-4 mr-2" />
+                        Dashboard
+                      </Button>
+                    </Link>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => {
+                        handleSignOut();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full border-red-300 text-red-600 hover:bg-red-600 hover:text-white"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Keluar
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-white">
+                        <LogIn className="h-4 w-4 mr-2" />
+                        Masuk
+                      </Button>
+                    </Link>
+                    <Link to="/register" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button className="w-full bg-primary hover:bg-primary-600 text-white">
+                        <User className="h-4 w-4 mr-2" />
+                        Daftar
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
