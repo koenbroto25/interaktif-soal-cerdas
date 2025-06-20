@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BookOpen } from 'lucide-react';
 
@@ -29,13 +30,15 @@ const TeachersHero = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl"
-              >
-                <BookOpen className="h-5 w-5 mr-2" />
-                Get started & create free account
-              </Button>
+              <Link to="/register">
+                <Button 
+                  size="lg" 
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl"
+                >
+                  <BookOpen className="h-5 w-5 mr-2" />
+                  Get started & create free account
+                </Button>
+              </Link>
             </div>
           </div>
 

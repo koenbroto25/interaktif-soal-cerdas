@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BookOpen } from 'lucide-react';
 
@@ -15,13 +16,15 @@ const ReadyToStart = () => {
           Join millions of students and teachers who are already using our interactive worksheets to make learning more engaging and effective.
         </p>
         
-        <Button 
-          size="lg" 
-          className="bg-white text-orange-500 hover:bg-gray-50 px-8 py-4 text-lg font-semibold rounded-xl shadow-lg"
-        >
-          <BookOpen className="h-5 w-5 mr-2" />
-          Create Your Free Account
-        </Button>
+        <Link to="/register">
+          <Button 
+            size="lg" 
+            className="bg-white text-orange-500 hover:bg-gray-50 px-8 py-4 text-lg font-semibold rounded-xl shadow-lg"
+          >
+            <BookOpen className="h-5 w-5 mr-2" />
+            Create Your Free Account
+          </Button>
+        </Link>
       </div>
     </section>
   );

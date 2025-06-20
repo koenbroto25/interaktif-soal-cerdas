@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Play, MessageCircle, Search } from 'lucide-react';
 
@@ -74,12 +75,14 @@ const GettingStarted = () => {
                 {step.description}
               </p>
               
-              <Button 
-                variant="outline" 
-                className="border-primary text-primary hover:bg-primary hover:text-white"
-              >
-                Learn More
-              </Button>
+              <Link to="/register">
+                <Button 
+                  variant="outline" 
+                  className="border-primary text-primary hover:bg-primary hover:text-white"
+                >
+                  Learn More
+                </Button>
+              </Link>
             </div>
           ))}
         </div>
