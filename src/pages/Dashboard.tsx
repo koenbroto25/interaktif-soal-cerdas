@@ -2,9 +2,11 @@
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { GraduationCap, Users, BookOpen, BarChart3, Settings, LogOut } from 'lucide-react';
+import { GraduationCap, LogOut } from 'lucide-react';
+import AdminDashboard from '@/components/dashboard/AdminDashboard';
+import TeacherDashboard from '@/components/dashboard/TeacherDashboard';
+import StudentDashboard from '@/components/dashboard/StudentDashboard';
 
 const Dashboard = () => {
   const { user, profile, signOut, loading } = useAuth();
@@ -46,88 +48,16 @@ const Dashboard = () => {
     }
   };
 
-  const getDashboardCards = () => {
-    const baseCards = [
-      {
-        title: 'Profile',
-        description: 'Kelola informasi akun Anda',
-        icon: Settings,
-        href: '/profile'
-      }
-    ];
-
+  const renderDashboardContent = () => {
     switch (profile.role) {
       case 'admin':
-        return [
-          {
-            title: 'Kelola Pengguna',
-            description: 'Kelola semua pengguna aplikasi',
-            icon: Users,
-            href: '/admin/users'
-          },
-          {
-            title: 'Kelola Worksheet',
-            description: 'Buat dan kelola semua worksheet',
-            icon: BookOpen,
-            href: '/admin/worksheets'
-          },
-          {
-            title: 'Statistik',
-            description: 'Lihat statistik penggunaan aplikasi',
-            icon: BarChart3,
-            href: '/admin/stats'
-          },
-          ...baseCards
-        ];
-      
+        return <AdminDashboard profile={profile} />;
       case 'teacher':
-        return [
-          {
-            title: 'Kelola Kelas',
-            description: 'Buat dan kelola kelas Anda',
-            icon: Users,
-            href: '/teacher/classes'
-          },
-          {
-            title: 'Worksheet Saya',
-            description: 'Buat dan kelola worksheet',
-            icon: BookOpen,
-            href: '/teacher/worksheets'
-          },
-          {
-            title: 'Hasil Siswa',
-            description: 'Lihat dan nilai hasil siswa',
-            icon: BarChart3,
-            href: '/teacher/results'
-          },
-          ...baseCards
-        ];
-      
+        return <TeacherDashboard profile={profile} />;
       case 'student':
-        return [
-          {
-            title: 'Kelas Saya',
-            description: 'Akses kelas yang Anda ikuti',
-            icon: Users,
-            href: '/student/classes'
-          },
-          {
-            title: 'Worksheet',
-            description: 'Kerjakan worksheet yang tersedia',
-            icon: BookOpen,
-            href: '/student/worksheets'
-          },
-          {
-            title: 'Nilai Saya',
-            description: 'Lihat hasil dan nilai Anda',
-            icon: BarChart3,
-            href: '/student/grades'
-          },
-          ...baseCards
-        ];
-      
+        return <StudentDashboard profile={profile} />;
       default:
-        return baseCards;
+        return <div>Role tidak dikenali</div>;
     }
   };
 
@@ -142,7 +72,7 @@ const Dashboard = () => {
                 <GraduationCap className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
+                <h1 className="text-xl font-bold text-gray-900">EduWorksheet</h1>
                 <p className="text-sm text-gray-600">Selamat datang, {profile.full_name || profile.email}</p>
               </div>
             </div>
@@ -166,73 +96,7 @@ const Dashboard = () => {
 
       {/* Dashboard Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Dashboard {getRoleLabel(profile.role)}
-          </h2>
-          <p className="text-gray-600">
-            Kelola aktivitas Anda di EduWorksheet
-          </p>
-        </div>
-
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {getDashboardCards().map((card, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center space-x-3">
-                  <div className="bg-primary-100 p-2 rounded-lg">
-                    <card.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-lg">{card.title}</CardTitle>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-gray-600">
-                  {card.description}
-                </CardDescription>
-                <Button 
-                  className="mt-4 w-full" 
-                  variant="outline"
-                  onClick={() => window.location.href = card.href}
-                >
-                  Buka
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* User Info Card */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle>Informasi Akun</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="text-sm font-medium text-gray-600">Email</label>
-                <p className="text-gray-900">{profile.email}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-600">Nama Lengkap</label>
-                <p className="text-gray-900">{profile.full_name || 'Belum diatur'}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-600">Role</label>
-                <p className="text-gray-900">{getRoleLabel(profile.role)}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-600">Bergabung</label>
-                <p className="text-gray-900">
-                  {new Date(profile.created_at).toLocaleDateString('id-ID')}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {renderDashboardContent()}
       </div>
     </div>
   );
