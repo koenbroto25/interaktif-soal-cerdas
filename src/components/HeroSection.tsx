@@ -3,8 +3,11 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { BookOpen, Users, Award, Zap } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const HeroSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative overflow-hidden bg-slate-50">
       {/* Background decoration */}
@@ -20,18 +23,17 @@ const HeroSection = () => {
           <div className="space-y-8 animate-slide-up">
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
-                Platform{' '}
+                {t('hero.title.platform')}{' '}
                 <span className="text-primary">
-                  Edukasi
+                  {t('hero.title.education')}
                 </span>{' '}
-                Interaktif untuk{' '}
+                {t('hero.title.platform2')}{' '}
                 <span className="text-accent">
-                  Masa Depan
+                  {t('hero.title.future')}
                 </span>
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Buat dan kerjakan lembar kerja interaktif secara online. Platform modern untuk guru dan siswa 
-                dengan fitur auto-correcting, feedback real-time, dan pengalaman belajar yang menyenangkan.
+                {t('hero.description')}
               </p>
             </div>
 
@@ -56,12 +58,12 @@ const HeroSection = () => {
               <Link to="/register">
                 <Button size="lg" className="w-full sm:w-auto bg-primary hover:bg-primary-600 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-glow">
                   <BookOpen className="h-5 w-5 mr-2" />
-                  Mulai Gratis Sekarang
+                  {t('hero.cta.start')}
                 </Button>
               </Link>
               <Link to="/worksheets">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300">
-                  Jelajahi Worksheet
+                  {t('hero.cta.explore')}
                 </Button>
               </Link>
             </div>
@@ -70,15 +72,15 @@ const HeroSection = () => {
             <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">1000+</div>
-                <div className="text-sm text-gray-600">Worksheet</div>
+                <div className="text-sm text-gray-600">{t('hero.stats.worksheets')}</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-secondary">5000+</div>
-                <div className="text-sm text-gray-600">Siswa Aktif</div>
+                <div className="text-sm text-gray-600">{t('hero.stats.students')}</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-accent">500+</div>
-                <div className="text-sm text-gray-600">Guru</div>
+                <div className="text-sm text-gray-600">{t('hero.stats.teachers')}</div>
               </div>
             </div>
           </div>
@@ -121,7 +123,7 @@ const HeroSection = () => {
                   </div>
                   
                   <Button className="w-full bg-secondary text-white hover:bg-secondary-600">
-                    ✓ Submit Jawaban
+                    {t('common.submit')}
                   </Button>
                 </div>
               </div>

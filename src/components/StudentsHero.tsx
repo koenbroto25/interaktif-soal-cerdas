@@ -2,9 +2,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Play } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const StudentsHero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,17 +16,15 @@ const StudentsHero = () => {
           <div className="space-y-8">
             <div className="space-y-6">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Interactive Worksheets
+                {t('students.hero.title')}
                 <br />
-                <span className="text-primary">For all Languages and</span>
+                <span className="text-primary">{t('students.hero.title2')}</span>
                 <br />
-                <span className="text-secondary">Subjects</span>
+                <span className="text-secondary">{t('students.hero.title3')}</span>
               </h1>
               
               <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                Learning is easy and fun with interactive worksheets and 
-                workbooks! We have millions of worksheets available to get 
-                started today for free!
+                {t('students.hero.description')}
               </p>
             </div>
 
@@ -34,7 +35,7 @@ const StudentsHero = () => {
                   className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl"
                 >
                   <BookOpen className="h-5 w-5 mr-2" />
-                  Start Learning With A Free Account
+                  {t('students.hero.cta')}
                 </Button>
               </Link>
             </div>

@@ -3,8 +3,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BookOpen } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const TeachersHero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-white py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,19 +16,17 @@ const TeachersHero = () => {
           <div className="space-y-8">
             <div className="space-y-6">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Create Interactive
+                {t('teachers.hero.title')}
                 <br />
-                <span className="text-primary">Worksheets For Teachers</span>
+                <span className="text-primary">{t('teachers.hero.title2')}</span>
                 <br />
-                <span className="text-secondary">of all Languages and</span>
+                <span className="text-secondary">{t('teachers.hero.title3')}</span>
                 <br />
-                <span className="text-gray-900">Subjects</span>
+                <span className="text-gray-900">{t('teachers.hero.title4')}</span>
               </h1>
               
               <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
-                Make your own interactive worksheets with our easy-to-use builder. Add 
-                multimedia content, drag & drop activities, and automatic grading and 
-                share them with your students in real time.
+                {t('teachers.hero.description')}
               </p>
             </div>
 
@@ -36,7 +37,7 @@ const TeachersHero = () => {
                   className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-xl"
                 >
                   <BookOpen className="h-5 w-5 mr-2" />
-                  Get started & create free account
+                  {t('teachers.hero.cta')}
                 </Button>
               </Link>
             </div>

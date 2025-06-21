@@ -3,27 +3,30 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Play, MessageCircle, Search } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const GettingStarted = () => {
+  const { t } = useLanguage();
+
   const steps = [
     {
       icon: BookOpen,
-      title: 'Get Started Guide',
-      description: 'Learn the basics of how to use our interactive worksheets and get the most out of your learning experience.',
+      title: t('getting.guide.title'),
+      description: t('getting.guide.description'),
       bgColor: 'bg-green-100',
       iconColor: 'text-green-600'
     },
     {
       icon: Play,
-      title: 'Video Tutorials',
-      description: 'Watch step-by-step video tutorials that will help you navigate through different types of exercises and activities.',
+      title: t('getting.video.title'),
+      description: t('getting.video.description'),
       bgColor: 'bg-blue-100',
       iconColor: 'text-blue-600'
     },
     {
       icon: MessageCircle,
-      title: 'Ask The Community',
-      description: 'Join our vibrant community of learners and teachers. Ask questions, share tips, and get help from peers.',
+      title: t('getting.community.title'),
+      description: t('getting.community.description'),
       bgColor: 'bg-pink-100',
       iconColor: 'text-pink-600'
     }
@@ -35,10 +38,10 @@ const GettingStarted = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Getting Started Is Easy
+            {t('getting.title')}
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-            If you're looking for help getting started, don't hesitate to reach out to us for assistance! Whether you're looking for a learning partner or just want to explore our resources.
+            {t('getting.description')}
           </p>
           
           {/* Search Bar */}
@@ -46,7 +49,7 @@ const GettingStarted = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Find topics..."
+                placeholder={t('getting.search')}
                 className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               />
               <button className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -80,7 +83,7 @@ const GettingStarted = () => {
                   variant="outline" 
                   className="border-primary text-primary hover:bg-primary hover:text-white"
                 >
-                  Learn More
+                  {t('getting.learn.more')}
                 </Button>
               </Link>
             </div>
