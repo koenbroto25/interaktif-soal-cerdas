@@ -3,9 +3,9 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import DashboardContent from '@/components/dashboard/DashboardContent';
+import TeacherDashboard from '@/components/dashboard/TeacherDashboard';
 
-const Dashboard = () => {
+const TeacherPage = () => {
   const { user, profile, signOut, loading } = useAuth();
 
   if (loading) {
@@ -23,6 +23,10 @@ const Dashboard = () => {
     return <Navigate to="/login" replace />;
   }
 
+  if (profile.role !== 'teacher') {
+    return <Navigate to="/login" replace />;
+  }
+
   const handleSignOut = async () => {
     await signOut();
   };
@@ -30,9 +34,11 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader profile={profile} onSignOut={handleSignOut} />
-      <DashboardContent profile={profile} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <TeacherDashboard profile={profile} />
+      </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default TeacherPage;

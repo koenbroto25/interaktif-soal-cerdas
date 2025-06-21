@@ -34,6 +34,15 @@ const Navbar = () => {
     navigate('/');
   };
 
+  const getDashboardRoute = (role: string) => {
+    switch (role) {
+      case 'admin': return '/admin';
+      case 'teacher': return '/teacher';
+      case 'student': return '/student';
+      default: return '/';
+    }
+  };
+
   const getRoleLabel = (role: string) => {
     switch (role) {
       case 'admin': return t('dashboard.role.admin');
@@ -108,7 +117,7 @@ const Navbar = () => {
                     {getRoleLabel(profile.role)}
                   </p>
                 </div>
-                <Link to="/dashboard">
+                <Link to={getDashboardRoute(profile.role)}>
                   <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
                     <Settings className="h-4 w-4 mr-2" />
                     {t('nav.dashboard')}
@@ -206,7 +215,7 @@ const Navbar = () => {
                         {getRoleLabel(profile.role)}
                       </p>
                     </div>
-                    <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link to={getDashboardRoute(profile.role)} onClick={() => setIsMobileMenuOpen(false)}>
                       <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-white">
                         <Settings className="h-4 w-4 mr-2" />
                         {t('nav.dashboard')}

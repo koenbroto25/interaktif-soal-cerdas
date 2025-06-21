@@ -10,7 +10,9 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
-import Dashboard from "./pages/Dashboard";
+import AdminPage from "./pages/AdminPage";
+import TeacherPage from "./pages/TeacherPage";
+import StudentPage from "./pages/StudentPage";
 import Students from "./pages/Students";
 import Teachers from "./pages/Teachers";
 import About from "./pages/About";
@@ -32,7 +34,9 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/teacher" element={<TeacherPage />} />
+              <Route path="/student" element={<StudentPage />} />
               <Route path="/students" element={<Students />} />
               <Route path="/teachers" element={<Teachers />} />
               <Route path="/about" element={<About />} />
